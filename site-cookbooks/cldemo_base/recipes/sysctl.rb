@@ -1,4 +1,3 @@
-sysctl 'disable arp filter' do
-  variable 'net.ipv4.conf.all.arp_filter'
-  value '0'
+sysctl_param 'net.ipv4.conf.all.arp_filter' do
+  value 0
 end
