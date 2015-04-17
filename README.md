@@ -10,13 +10,16 @@ xxx
 
 ### In your own network
 
-Clone or copy these scripts to your management webserver.
+Upload the Cookbooks, Roles and Data Bags to your Chef server.
 
 ### Within the Cumulus Workbench
 
 In the [workbench](http://cumulusnetworks.com/cumulus-workbench/) you can install the package cldemo-wbench-ospfunnum-puppet. When this package is installed a [postinst](https://github.com/CumulusNetworks/cldemo/blob/master/pkgs/workbench/cldemo-wbench-ospfunnum-chef/debian/DEBIAN/postinst) contained in the package performs these actions:
 
-* .
+* Installs and configures Chef server & knife
+* Clones this git repo into /home/cumulus/example-ospfunnum-chef
+* Install any dependencies using [librarian-chef](https://github.com/applicationsonline/librarian-chef) (from Cheffile)
+* Uploads the Cookbooks, Roles & Data Bags & Nodes in this repo
 
 ***
 
