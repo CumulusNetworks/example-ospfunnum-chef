@@ -5,23 +5,36 @@
 # Copyright 2014, Cumulus Networks
 #
 
-interface_items = search( :interfaces, "id:#{node['hostname']}" )
+interface_items = search( :interfaces, "id:#{node['hostname']}" ).first
 
-interface_items.each do |item|
-	template "/etc/network/interfaces" do
-		source "interfaces.erb"
-		owner "root"
-		group "root"
-		mode "0644"
-		variables({
-			:interfaces => item
-			})
-		notifies :restart, "service[networking]"
-	end
+loopback = interface_items['loopback']
+unnumbered = interface_items['unnumbered'] || []
+layer3 = interface_items['layer3'] || []
+bridges = interface_items['bridges'] || []
 
-	service "networking" do
-		supports :status => true, :restart => true
-		action [ :enable, :start ]
-	end
+cumulus_interface 'lo:1' do
+  ipv4 ["#{loopback['address']}/32"]
+  notifies :restart, "service[networking]"
+end
 
+unnumbered.each do |intf|
+  cumulus_interface intf do
+    ipv4 ["#{loopback['address']}/32"]
+    notifies :restart, "service[networking]"
+  end
+end
+
+layer3.each do |intf|
+  cumulus_interface intf['name'] do
+    ipv4 ["#{intf['address']}/#{intf['netmask']}"]
+    notifies :restart, "service[networking]"
+  end
+end
+
+bridges.each do |intf|
+  cumulus_bridge intf['name'] do
+    ipv4 ["#{intf['address']}/#{intf['netmask']}"]
+    ports intf['ports']
+    notifies :restart, "service[networking]"
+  end
 end
