@@ -5,7 +5,7 @@
 # Copyright 2014, Cumulus Networks
 #
 
-interface_items = search( :interfaces, "id:#{node['hostname']}" ).first
+interface_items = data_bag_item(:interfaces, node.name)
 
 loopback = interface_items['loopback']
 unnumbered = interface_items['unnumbered'] || []
