@@ -7,11 +7,8 @@
 # All rights reserved - Do Not Redistribute
 #
 
-cookbook_file '40G.conf' do
-  path '/etc/cumulus/ports.conf'
-  owner 'root'
-  group 'root'
-  mode '0644'
-  action :create
+cumulus_ports 'workbench' do
+  speed_4_by_10g ['swp1', 'swp32']
+  speed_40g ['swp2-31']
   notifies :restart, "service[switchd]"
 end

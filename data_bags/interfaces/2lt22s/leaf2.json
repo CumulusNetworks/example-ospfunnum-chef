@@ -6,13 +6,13 @@
    {
     "name": "br0",
     "address": "10.4.2.1",
-    "netmask": "255.255.255.128",
+    "netmask": "25",
     "ports": [ "swp32s0" ]
    },
    {
     "name": "br1",
     "address": "10.4.2.129",
-    "netmask": "255.255.255.128",
+    "netmask": "25",
     "ports": [ "swp32s1" ]
    }
   ]

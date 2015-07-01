@@ -5,6 +5,6 @@
 	"default_attributes":{},
 	"override_attributes":{},
 	"chef_type":"role",
-	"run_list":["cldemo_base"],
+	"run_list":["cumulus", "cldemo_base"],
 	"env_run_lists":{}
 }
